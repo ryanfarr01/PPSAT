@@ -43,8 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="Data Types\Disjunction.cs" />
+    <Compile Include="Data Types\Frame.cs" />
+    <Compile Include="SAT_Solver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Data Types\Variable.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
