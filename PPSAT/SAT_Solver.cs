@@ -18,8 +18,10 @@ namespace PPSAT
             Dictionary<int, HashSet<Disjunction>> var_disjunctions;
             List<Variable> M;
 
+            //Check to see if the filepath was passed in
             if (args.Count() > 0)
             {
+                //Ttry to read the file
                 if (!ReadFile(out disjunctions, out var_disjunctions, args[0]))
                 {
                     Console.WriteLine("Could not read file. Exiting...");
@@ -28,16 +30,19 @@ namespace PPSAT
             }
             else
             {
+                //If the filepath wasn't passed in, request it
                 Console.WriteLine("Please input file path: ");
                 String path = Console.ReadLine();
 
+                //Try to read the file
                 if (!ReadFile(out disjunctions, out var_disjunctions, path))
                 {
                     Console.WriteLine("Could not read file. Exiting...");
                     return;
                 }
             }
-
+            
+            //If it's solvable (satisfiable), then print out the model
             if(Solve(ref disjunctions, ref var_disjunctions, out M))
             {
                 Console.WriteLine("Satisfiable");
@@ -45,9 +50,9 @@ namespace PPSAT
                 foreach(Variable v in M)
                     Console.WriteLine(v.ID + " : " + v.value);
             }
-            else Console.WriteLine("Unsatisfiable");
+            else Console.WriteLine("Unsatisfiable"); //Otherwise it's unsatisfiable
 
-            Console.ReadLine();
+            Console.ReadLine(); //DELETE
         }
 
         private static bool ReadFile(out List<Disjunction> disjunctions, out Dictionary<int, HashSet<Disjunction>> var_disjunctions, string path)
