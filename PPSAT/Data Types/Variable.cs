@@ -54,6 +54,7 @@ namespace PPSAT
         /// <returns></returns>
         public override bool Equals(object obj)
         {
+            if(Object.ReferenceEquals(null, obj))  return false; 
             Variable v = obj as Variable;
             return v.value == value;
         }
@@ -64,7 +65,17 @@ namespace PPSAT
         /// <param name="v1"></param>
         /// <param name="v2"></param>
         /// <returns></returns>
-        public static bool operator ==(Variable v1, Variable v2) { return v1.ID == v2.ID; }
+        public static bool operator ==(Variable v1, Variable v2)
+        {
+            if(!Object.ReferenceEquals(v1, null) && !Object.ReferenceEquals(v2, null))
+                return v1.ID == v2.ID;
+
+            if (Object.ReferenceEquals(null, v1) && Object.ReferenceEquals(v2, null))
+                return true;
+
+            //Otherwise one is null while the other is not
+            return false;
+        }
 
         /// <summary>
         /// Tells if the IDs are NOT the same
@@ -79,7 +90,7 @@ namespace PPSAT
         /// </summary>
         /// <param name="v"></param>
         /// <returns></returns>
-        public static bool operator !(Variable v) { return !v.value; }
+        public static Variable operator !(Variable v) { return new Variable(v.ID, !v.value); }
 
         /// <summary>
         /// Returns true if the value is true

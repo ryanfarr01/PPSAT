@@ -21,11 +21,48 @@ namespace PPSAT
         {
             Disjunction r = new Disjunction();
 
-            for(int i = 0; i < vars.Count; i++)
-                r[i] = vars[i];
+            for (int i = 0; i < vars.Count; i++)
+                r.Add(vars[i]);
 
             return r;
         }
+
+        public bool Contains(Variable item)
+        {
+            for(int i = 0; i < vars.Count; i++) //IS THIS NECESSARY?
+                if (vars[i] == item) return true;
+
+            return false;
+        }
+
+
+        public int IndexOf(Variable item)
+        {
+            for(int i = 0; i < vars.Count; i++) //IS THIS NECESSARY?
+                if(vars[i] == item)  return i; 
+
+            return -1;
+        }
+
+        public bool Remove(Variable item)
+        {
+            foreach (Variable v in vars) //IS THIS NECESSARY? MAY ALREADY WORK WITH JUST vars.Remove(item)
+            {
+                if(v == item)
+                {
+                    vars.Remove(v);
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        public void Insert(int index, Variable item) { vars.Insert(index, item); }
+
+        public void CopyTo(Variable[] array, int arrayIndex) { vars.CopyTo(array, arrayIndex); }
+
+        public void RemoveAt(int index) { vars.RemoveAt(index); }
 
         public int Count { get { return vars.Count; } }
 
@@ -35,19 +72,8 @@ namespace PPSAT
 
         public void Clear() { vars = new List<Variable>(); }
 
-        public bool Contains(Variable item) { return vars.Contains(item); }
-
-        public void CopyTo(Variable[] array, int arrayIndex) { vars.CopyTo(array, arrayIndex); }
-
-        public int IndexOf(Variable item) { return vars.IndexOf(item); }
-
-        public void Insert(int index, Variable item) { vars.Insert(index, item); }
-
-        public bool Remove(Variable item) { return vars.Remove(item); }
-
-        public void RemoveAt(int index) { vars.RemoveAt(index); }
-
         public IEnumerator<Variable> GetEnumerator() { return vars.GetEnumerator(); }
+
         IEnumerator IEnumerable.GetEnumerator() { return vars.GetEnumerator(); }
     }
 }
