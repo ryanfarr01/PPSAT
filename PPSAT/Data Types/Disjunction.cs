@@ -17,7 +17,7 @@ namespace PPSAT
             set { vars[index] = value; }
         }
 
-        public Disjunction Copy()
+        public Disjunction Clone()
         {
             Disjunction r = new Disjunction();
 
