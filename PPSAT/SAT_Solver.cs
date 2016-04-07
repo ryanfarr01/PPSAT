@@ -38,6 +38,7 @@ namespace PPSAT
                 if (!ReadFile(out disjunctions, out var_disjunctions, path))
                 {
                     Console.WriteLine("Could not read file. Exiting...");
+                    Console.ReadLine();
                     return;
                 }
             }
