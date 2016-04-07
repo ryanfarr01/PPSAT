@@ -11,3 +11,6 @@ C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT\bin\Debug\PPSAT.pdb
 C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT\obj\Debug\PPSAT.csprojResolveAssemblyReference.cache
 C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT\obj\Debug\PPSAT.exe
 C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT\obj\Debug\PPSAT.pdb
+C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\bin\Debug\PPSAT.exe.config
+C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\obj\Debug\PPSAT.exe
+C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\obj\Debug\PPSAT.pdb
