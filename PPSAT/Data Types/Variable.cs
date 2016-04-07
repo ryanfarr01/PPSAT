@@ -42,10 +42,7 @@ namespace PPSAT
         /// relates to the variable symbolically, but does not have the same address.
         /// </summary>
         /// <returns></returns>
-        public override int GetHashCode()
-        {
-            return ID;
-        }
+        public override int GetHashCode() { return ID; }
 
         /// <summary>
         /// Tells if the values of the variables are the same
