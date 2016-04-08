@@ -53,7 +53,12 @@ namespace PPSAT
         {
             if(Object.ReferenceEquals(null, obj))  return false; 
             Variable v = obj as Variable;
-            return v.value == value;
+            return v.ID == ID;
+        }
+
+        public bool SameSign(Variable v)
+        {
+            return value == v.value;
         }
 
         /// <summary>

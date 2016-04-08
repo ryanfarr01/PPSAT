@@ -99,10 +99,22 @@ namespace PPSAT
                             if((index = d.IndexOf(v)) != -1)
                             {
                                 //If this disjunction has v or ~v it is a tautology and we can ignore it
-                                if(!d[index].Equals(v))
+                                if(!d[index].SameSign(v))
                                 {
                                     //Remove this disjunction and get rid of the disjunction in every applicable variable's dictionary
+                                    foreach(Variable var in d)
+                                    {
+
+                                        HashSet<Disjunction> h = var_disjunctions[var.ID];
+                                        h.Remove(d);
+                                    }
+
+                                    d.Clear();
+                                    continue;
                                 }
+
+                                //If we reach this point, this variable is indeed in the disjunction, but has the same value as the other v. So we'll just continue
+                                continue;
                             }
                             //add the variable to the disjunction
                             d.Add(v);
@@ -253,14 +265,14 @@ namespace PPSAT
         {
             //Check to see if there's a contradiction
             for(int i = 0; i < M.Count; i++)
-                if ((M[i] == v) && !(M[i].Equals(v))) return false;
+                if ((M[i] == v) && !(M[i].SameSign(v))) return false;
 
             //Check to see if this leads to a contradiction
             HashSet<Disjunction> h = var_disjunctions[v.ID];
             foreach(Disjunction d in h)
             {
                 //Check to see if there's a disjunction with only ~v (meaning there's a contradiction)
-                if (d.Count == 1 && d[0] == v && !d[0].Equals(v))
+                if (d.Count == 1 && d[0] == v && !d[0].SameSign(v))
                     return false;
             }
 
@@ -274,7 +286,7 @@ namespace PPSAT
                 bool hasV = false;
                 foreach(int index in d.IndexesOf(v))
                 {
-                    if(d[index].Equals(v))
+                    if(d[index].SameSign(v))
                     {
                         hasV = true;
                         break;

@@ -1,4 +1,3 @@
-import javax.swing.text.SimpleAttributeSet;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
@@ -78,6 +77,8 @@ public class PPSAT_Tester
 
 //            Println(s);
         }
+
+        br.close();
 
         return satisfiable;
     }
