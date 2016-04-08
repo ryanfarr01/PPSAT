@@ -110,7 +110,7 @@ namespace PPSAT
                                     }
 
                                     d.Clear();
-                                    continue;
+                                    break;
                                 }
 
                                 //If we reach this point, this variable is indeed in the disjunction, but has the same value as the other v. So we'll just continue

@@ -38,6 +38,7 @@ public class PPSAT_Tester
         }
         Println("Found PPSAT.exe");
 
+        int wrong = 0;
         for(int i = 0; i < 100; i++)
         {
             String test_file = CreateTest();
@@ -49,12 +50,29 @@ public class PPSAT_Tester
             Println("Finished");
 
             if (sat_minisat != sat_ppsat)
-                Println("PPSAT returns " + (sat_ppsat ? SATISFIABLE : UNSATISFIABLE) + " instead of " + (sat_minisat ? SATISFIABLE : UNSATISFIABLE));
+            {
+                wrong++;
+                Println("PPSAT test: " + test_file + " returns " + (sat_ppsat ? SATISFIABLE : UNSATISFIABLE) + " instead of " + (sat_minisat ? SATISFIABLE : UNSATISFIABLE));
+            }
             else
+            {
+                new File(test_file).delete();
                 Println("PPSAT and MiniSat agree on: " + test_file);
+            }
 
             Println("");
+
+            //Set the SAT and UNSAT variables
+            if(sat_minisat)
+                NUM_SAT++;
+            else
+                NUM_UNSAT++;
         }
+
+        Println("Testing complete. Statistics: ");
+        Println("    Number incorrect: " + wrong);
+        Println("    Tests that were Satisfiable: " + NUM_SAT);
+        Println("    Tests that were Unatisfiable: " + NUM_UNSAT);
     }
 
     private static boolean TestExecutable(File file, String test_file) throws Exception
@@ -91,16 +109,21 @@ public class PPSAT_Tester
         String filename = "test-" + TEST_NUMBER++ + ".cnf";
         PrintWriter pw = new PrintWriter(filename, "UTF-8");
 
-        int lines = 5;
+        int lines = 40;
         int vars = 5;
 
         pw.println("p cnf " + vars + " " + lines);
         for(int i = 0; i < lines; i++)
         {
-            int x = RandomVariable(vars);
-            int y = RandomVariable(vars);
+            int num_vars = 3;
+            for(int j = 0; j < num_vars; j++)
+            {
+                int x = RandomVariable(vars);
+                pw.print(x + " ");
+            }
 
-            pw.println(x + " " + y + " " + 0);
+            pw.print(0);
+            pw.println();
         }
 
         pw.close();
