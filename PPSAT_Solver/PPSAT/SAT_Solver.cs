@@ -104,7 +104,6 @@ namespace PPSAT
                                     //Remove this disjunction and get rid of the disjunction in every applicable variable's dictionary
                                     foreach(Variable var in d)
                                     {
-
                                         HashSet<Disjunction> h = var_disjunctions[var.ID];
                                         h.Remove(d);
                                     }
@@ -146,7 +145,7 @@ namespace PPSAT
             Stack<Frame> frames = new Stack<Frame>();
 
             //Go until it is complete
-            while(!Complete(var_disjunctions))
+            while(!Complete(var_disjunctions, disjunctions))
             {
                 Variable v = Propagate(ref disjunctions, ref var_disjunctions, ref M);
                 if(v != null) //Check to see if we can propagate
@@ -283,19 +282,19 @@ namespace PPSAT
                 Disjunction d = temp[i];
 
                 //If the variable is not ~v in this disjunction (meaning this won't satisfy this disjunction)
-                bool hasV = false;
-                foreach(int index in d.IndexesOf(v))
-                {
-                    if(d[index].SameSign(v))
-                    {
-                        hasV = true;
-                        break;
-                    }
-                }
+                //bool hasV = false;
+                //foreach(int index in d.IndexesOf(v))
+                //{
+                //    if(d[index].SameSign(v))
+                //    {
+                //        hasV = true;
+                //        break;
+                //    }
+                //}
 
                 //If this disjunction does contain at least one instance of v rather than it exclusively containing ~v
                 //Then let's get rid of the disjunction (it has been satisfied) and update our DSs.
-                if (hasV)
+                if (d[d.IndexOf(v)].SameSign(v))
                 {
                     //Remove from the current hash set
                     h.Remove(d);
@@ -328,13 +327,15 @@ namespace PPSAT
         /// </summary>
         /// <param name="var_disjunctions"></param>
         /// <returns></returns>
-        private static bool Complete(Dictionary<int, HashSet<Disjunction>> var_disjunctions)
+        private static bool Complete(Dictionary<int, HashSet<Disjunction>> var_disjunctions, List<Disjunction> disjunctions)
         {
-            bool empty = true;
-            foreach(KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
-                if (kp.Value.Count > 0) empty = false;
+            //bool empty = true;
+            if (disjunctions.Count == 0)
+                return true;
+            //foreach(KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
+            //    if (kp.Value.Count > 0) empty = false;
 
-            return empty;
+            return false;
         }
     }
 }

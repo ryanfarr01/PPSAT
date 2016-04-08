@@ -39,15 +39,26 @@ namespace PPSAT
                 M_vars.Add(var.Clone());
 
             //Duplicate var_disjunctions
+            //Dictionary<int, HashSet<Disjunction>> dict = new Dictionary<int, HashSet<Disjunction>>();
+            //foreach (KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
+            //{
+            //    HashSet<Disjunction> hash_disj = new HashSet<Disjunction>();
+            //    foreach(Disjunction disj in kp.Value)
+            //    {
+            //        hash_disj.Add(disj.Clone());
+            //    }
+            //    dict[kp.Key] = hash_disj;
+            //}
             Dictionary<int, HashSet<Disjunction>> dict = new Dictionary<int, HashSet<Disjunction>>();
-            foreach (KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
+            foreach(Disjunction disj in d)
             {
-                HashSet<Disjunction> hash_disj = new HashSet<Disjunction>();
-                foreach(Disjunction disj in kp.Value)
+                foreach(Variable var in disj)
                 {
-                    hash_disj.Add(disj.Clone());
+                    if (!dict.ContainsKey(var.ID))
+                        dict.Add(var.ID, new HashSet<Disjunction>());
+
+                    dict[var.ID].Add(disj);
                 }
-                dict[kp.Key] = hash_disj;
             }
 
             //Put in the storage objects

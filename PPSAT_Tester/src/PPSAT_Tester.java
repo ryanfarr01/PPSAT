@@ -109,8 +109,8 @@ public class PPSAT_Tester
         String filename = "test-" + TEST_NUMBER++ + ".cnf";
         PrintWriter pw = new PrintWriter(filename, "UTF-8");
 
-        int lines = 40;
-        int vars = 5;
+        int lines = 350;
+        int vars = 81;
 
         pw.println("p cnf " + vars + " " + lines);
         for(int i = 0; i < lines; i++)
