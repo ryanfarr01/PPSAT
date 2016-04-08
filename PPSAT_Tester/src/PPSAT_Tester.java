@@ -2,6 +2,7 @@ import javax.swing.text.SimpleAttributeSet;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 
 public class PPSAT_Tester
 {
@@ -9,6 +10,9 @@ public class PPSAT_Tester
     private static String SATISFIABLE = "SATISFIABLE";
     private static String MINISAT = "minisat.exe";
     private static String PPSAT_EXE = "PPSAT.exe";
+    private static int TEST_NUMBER = 0;
+    private static int NUM_SAT = 0;
+    private static int NUM_UNSAT = 0;
     private static boolean VERBOSE = true;
 
     public static void main(String[] args) throws Exception
@@ -35,15 +39,34 @@ public class PPSAT_Tester
         }
         Println("Found PPSAT.exe");
 
-        ProcessBuilder p_minisat = new ProcessBuilder(minisat.getAbsolutePath(), "n-queens.txt");
-        ProcessBuilder p_PPSAT = new ProcessBuilder(PPSAT.getAbsolutePath(), "n-queens.txt");
+        for(int i = 0; i < 100; i++)
+        {
+            String test_file = CreateTest();
 
-        Process proc_minisat = p_minisat.start();
-        proc_minisat.waitFor();
+            Println("Testing minisat");
+            boolean sat_minisat = TestExecutable(minisat, test_file);
+            Println("Testing PPSAT");
+            boolean sat_ppsat = TestExecutable(PPSAT, test_file);
+            Println("Finished");
 
-        BufferedReader br = new BufferedReader(new InputStreamReader(proc_minisat.getInputStream()));
+            if (sat_minisat != sat_ppsat)
+                Println("PPSAT returns " + (sat_ppsat ? SATISFIABLE : UNSATISFIABLE) + " instead of " + (sat_minisat ? SATISFIABLE : UNSATISFIABLE));
+            else
+                Println("PPSAT and MiniSat agree on: " + test_file);
 
-        Println("Starting minisat");
+            Println("");
+        }
+    }
+
+    private static boolean TestExecutable(File file, String test_file) throws Exception
+    {
+        ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath(), test_file);
+
+        Process process = pb.start();
+        process.waitFor();
+
+        BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
         String s;
         boolean satisfiable = false;
         while((s = br.readLine()) != null)
@@ -53,28 +76,43 @@ public class PPSAT_Tester
             if(s.contains(UNSATISFIABLE))
                 satisfiable = false;
 
-            Println(s);
+//            Println(s);
         }
 
-        Process proc_PPSAT = p_PPSAT.start();
-        proc_PPSAT.waitFor();
-        br = new BufferedReader(new InputStreamReader((proc_PPSAT.getInputStream())));
-        Println("Starting PPSAT");
-        boolean ppsat_satisfiable = false;
-        while((s = br.readLine()) != null)
+        return satisfiable;
+    }
+
+    /*
+    *  Function CreateTest - creates a test CNF file and returns the string filename and path
+    */
+    private static String CreateTest() throws Exception
+    {
+        String filename = "test-" + TEST_NUMBER++ + ".cnf";
+        PrintWriter pw = new PrintWriter(filename, "UTF-8");
+
+        int lines = 5;
+        int vars = 5;
+
+        pw.println("p cnf " + vars + " " + lines);
+        for(int i = 0; i < lines; i++)
         {
-            if(s.contains(SATISFIABLE))
-                ppsat_satisfiable = true;
-            if(s.contains(UNSATISFIABLE))
-                ppsat_satisfiable = false;
+            int x = RandomVariable(vars);
+            int y = RandomVariable(vars);
 
-            Println(s);
+            pw.println(x + " " + y + " " + 0);
         }
 
-        if(ppsat_satisfiable != satisfiable)
-            Println("PPSAT returns " + (ppsat_satisfiable ? SATISFIABLE : UNSATISFIABLE) + " instead of " + (satisfiable ? SATISFIABLE : UNSATISFIABLE));
-        else
-            Println("PPSAT and MiniSat agree");
+        pw.close();
+        return filename;
+    }
+
+    private static int RandomVariable(int max_vars)
+    {
+        int x = (int)(Math.random() * max_vars) + 1;
+        if(Math.random() < 0.5)
+            x *= -1;
+
+        return x;
     }
 
     private static File GetExecutable(String executable)
@@ -94,5 +132,10 @@ public class PPSAT_Tester
     private static void Println(String p)
     {
         if(VERBOSE) { System.out.println(p); }
+    }
+
+    private static float ToSeconds(long time)
+    {
+        return (float)(time);
     }
 }

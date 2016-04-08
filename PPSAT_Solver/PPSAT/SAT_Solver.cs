@@ -46,12 +46,12 @@ namespace PPSAT
             //If it's solvable (satisfiable), then print out the model
             if(Solve(ref disjunctions, ref var_disjunctions, out M))
             {
-                Console.WriteLine("Satisfiable");
+                Console.WriteLine("SATISFIABLE");
 
                 foreach(Variable v in M)
                     Console.WriteLine(v.ID + " : " + v.value);
             }
-            else Console.WriteLine("Unsatisfiable"); //Otherwise it's unsatisfiable
+            else Console.WriteLine("UNSATISFIABLE"); //Otherwise it's unsatisfiable
 
             //Console.ReadLine(); //DELETE
         }
@@ -95,6 +95,15 @@ namespace PPSAT
                             //Make the variable
                             Variable v = new Variable(Math.Abs(i), i > 0);
 
+                            int index = -1;
+                            if((index = d.IndexOf(v)) != -1)
+                            {
+                                //If this disjunction has v or ~v it is a tautology and we can ignore it
+                                if(!d[index].Equals(v))
+                                {
+                                    //Remove this disjunction and get rid of the disjunction in every applicable variable's dictionary
+                                }
+                            }
                             //add the variable to the disjunction
                             d.Add(v);
 
@@ -250,16 +259,31 @@ namespace PPSAT
             HashSet<Disjunction> h = var_disjunctions[v.ID];
             foreach(Disjunction d in h)
             {
+                //Check to see if there's a disjunction with only ~v (meaning there's a contradiction)
                 if (d.Count == 1 && d[0] == v && !d[0].Equals(v))
                     return false;
             }
 
             //If we didn't return false, then we can successfully add this variable
-            Disjunction[] temp = h.ToArray();
+            Disjunction[] temp = h.ToArray(); //Every disjunction that contains 
             for(int i = 0; i < temp.Count(); i++)
             {
                 Disjunction d = temp[i];
-                if(d[d.IndexOf(v)].Equals(v))
+
+                //If the variable is not ~v in this disjunction (meaning this won't satisfy this disjunction)
+                bool hasV = false;
+                foreach(int index in d.IndexesOf(v))
+                {
+                    if(d[index].Equals(v))
+                    {
+                        hasV = true;
+                        break;
+                    }
+                }
+
+                //If this disjunction does contain at least one instance of v rather than it exclusively containing ~v
+                //Then let's get rid of the disjunction (it has been satisfied) and update our DSs.
+                if (hasV)
                 {
                     //Remove from the current hash set
                     h.Remove(d);
@@ -268,7 +292,7 @@ namespace PPSAT
                     foreach(Variable var in d)
                         var_disjunctions[var.ID].Remove(d);
 
-                    //Remove from the disjunctions list
+                    //Remove the disjunction from the disjunctions list
                     disjunctions.Remove(d);
                 }
                 else

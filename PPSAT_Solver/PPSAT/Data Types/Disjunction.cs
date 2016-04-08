@@ -44,6 +44,18 @@ namespace PPSAT
             return -1;
         }
 
+        public ArrayList IndexesOf(Variable item)
+        {
+            ArrayList ret = new ArrayList();
+            for(int i = 0; i < vars.Count; i++)
+            {
+                if (vars[i] == item)
+                    ret.Add(i);
+            }
+
+            return ret;
+        }
+
         public bool Remove(Variable item)
         {
             foreach (Variable v in vars) //IS THIS NECESSARY? MAY ALREADY WORK WITH JUST vars.Remove(item)
