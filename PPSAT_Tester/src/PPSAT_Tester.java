@@ -39,9 +39,11 @@ public class PPSAT_Tester
         Println("Found PPSAT.exe");
 
         int wrong = 0;
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 10000; i++)
         {
-            String test_file = CreateTest();
+            boolean lines = Math.random() < 0.5;
+            int max_vars = 3 + (int)(Math.random() * 5);
+            String test_file = CreateTest(lines, max_vars);
 
             Println("Testing minisat");
             boolean sat_minisat = TestExecutable(minisat, test_file);
@@ -60,19 +62,20 @@ public class PPSAT_Tester
                 Println("PPSAT and MiniSat agree on: " + test_file);
             }
 
-            Println("");
-
             //Set the SAT and UNSAT variables
             if(sat_minisat)
                 NUM_SAT++;
             else
                 NUM_UNSAT++;
-        }
 
-        Println("Testing complete. Statistics: ");
-        Println("    Number incorrect: " + wrong);
-        Println("    Tests that were Satisfiable: " + NUM_SAT);
-        Println("    Tests that were Unatisfiable: " + NUM_UNSAT);
+            //Print statistics
+            Println("Testing complete. Statistics: ");
+            Println("    Number incorrect: " + wrong);
+            Println("    Tests that were Satisfiable: " + NUM_SAT);
+            Println("    Tests that were Unatisfiable: " + NUM_UNSAT);
+
+            Println("");
+        }
     }
 
     private static boolean TestExecutable(File file, String test_file) throws Exception
@@ -104,7 +107,7 @@ public class PPSAT_Tester
     /*
     *  Function CreateTest - creates a test CNF file and returns the string filename and path
     */
-    private static String CreateTest() throws Exception
+    private static String CreateTest(boolean set_number_vars, int max_vars_per_line) throws Exception
     {
         String filename = "test-" + TEST_NUMBER++ + ".cnf";
         PrintWriter pw = new PrintWriter(filename, "UTF-8");
@@ -115,7 +118,7 @@ public class PPSAT_Tester
         pw.println("p cnf " + vars + " " + lines);
         for(int i = 0; i < lines; i++)
         {
-            int num_vars = 3;
+            int num_vars = set_number_vars ? max_vars_per_line : 1 + (int)(Math.random()*max_vars_per_line);
             for(int j = 0; j < num_vars; j++)
             {
                 int x = RandomVariable(vars);

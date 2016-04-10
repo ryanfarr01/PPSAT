@@ -38,25 +38,18 @@ namespace PPSAT
             foreach (Variable var in M)
                 M_vars.Add(var.Clone());
 
-            //Duplicate var_disjunctions
-            //Dictionary<int, HashSet<Disjunction>> dict = new Dictionary<int, HashSet<Disjunction>>();
-            //foreach (KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
-            //{
-            //    HashSet<Disjunction> hash_disj = new HashSet<Disjunction>();
-            //    foreach(Disjunction disj in kp.Value)
-            //    {
-            //        hash_disj.Add(disj.Clone());
-            //    }
-            //    dict[kp.Key] = hash_disj;
-            //}
+            //Duplicate the dictionary.
+            //Note that the Disjunction references *have* to be the same for this to work.
             Dictionary<int, HashSet<Disjunction>> dict = new Dictionary<int, HashSet<Disjunction>>();
             foreach(Disjunction disj in d)
             {
                 foreach(Variable var in disj)
                 {
+                    //Check to see if a dictionary doesn't arleady exist
                     if (!dict.ContainsKey(var.ID))
                         dict.Add(var.ID, new HashSet<Disjunction>());
 
+                    //Add the disjunction to the variable's hashset within the dictionary
                     dict[var.ID].Add(disj);
                 }
             }

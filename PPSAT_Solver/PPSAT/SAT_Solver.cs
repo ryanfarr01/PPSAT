@@ -281,17 +281,6 @@ namespace PPSAT
             {
                 Disjunction d = temp[i];
 
-                //If the variable is not ~v in this disjunction (meaning this won't satisfy this disjunction)
-                //bool hasV = false;
-                //foreach(int index in d.IndexesOf(v))
-                //{
-                //    if(d[index].SameSign(v))
-                //    {
-                //        hasV = true;
-                //        break;
-                //    }
-                //}
-
                 //If this disjunction does contain at least one instance of v rather than it exclusively containing ~v
                 //Then let's get rid of the disjunction (it has been satisfied) and update our DSs.
                 if (d[d.IndexOf(v)].SameSign(v))
@@ -332,8 +321,6 @@ namespace PPSAT
             //bool empty = true;
             if (disjunctions.Count == 0)
                 return true;
-            //foreach(KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
-            //    if (kp.Value.Count > 0) empty = false;
 
             return false;
         }
