@@ -42,9 +42,10 @@ namespace PPSAT
                     return;
                 }
             }
-            
+
             //If it's solvable (satisfiable), then print out the model
-            if(Solve(ref disjunctions, ref var_disjunctions, out M))
+            Random r = new Random();
+            if(Solve(ref disjunctions, ref var_disjunctions, out M, r))
             {
                 Console.WriteLine("SATISFIABLE");
 
@@ -139,36 +140,53 @@ namespace PPSAT
             return true;
         }
 
-        private static bool Solve(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, out List<Variable> M)
+        private static bool Solve(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, out List<Variable> M, Random r)
         {
             M = new List<Variable>();
             Stack<Frame> frames = new Stack<Frame>();
+            Variable false_var = new Variable(-1, false);
+            Frame start_frame = new Frame(disjunctions, M, var_disjunctions, false_var);
+            double max_time = 0.2;
+
+            DateTime start_time = DateTime.Now;
 
             //Go until it is complete
             while(!Complete(var_disjunctions, disjunctions))
             {
-                Variable v = Propagate(ref disjunctions, ref var_disjunctions, ref M);
-                if(v != null) //Check to see if we can propagate
+                if ((DateTime.Now - start_time).TotalSeconds < max_time)
                 {
-                    //Try to add the variable
-                    if(!AddVariable(ref disjunctions, ref var_disjunctions, ref M, v))
+                    Variable v = Propagate(ref disjunctions, ref var_disjunctions, ref M);
+                    if (v != null) //Check to see if we can propagate
                     {
-                        //If we can't, try to add the variable with the opposite value
-                        if(!AddVariable(ref disjunctions, ref var_disjunctions, ref M, !v))
+                        //Try to add the variable
+                        if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, v))
                         {
-                            //If both of these fail, then we need to fail or backtrack
+                            //If we can't, try to add the variable with the opposite value
+                            if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, !v))
+                            {
+                                //If both of these fail, then we need to fail or backtrack
+                                if (!Fail_Or_Backtrack(ref disjunctions, ref var_disjunctions, ref M, ref frames))
+                                    return false;
+                            }
+                        }
+                    }
+                    else //Decide
+                    {
+                        if (!Decide(ref disjunctions, ref var_disjunctions, ref M, ref frames, r))
+                        {
                             if (!Fail_Or_Backtrack(ref disjunctions, ref var_disjunctions, ref M, ref frames))
                                 return false;
                         }
                     }
                 }
-                else //Decide
+                else //Restart, we timed out
                 {
-                    if(!Decide(ref disjunctions, ref var_disjunctions, ref M, ref frames))
-                    {
-                        if (!Fail_Or_Backtrack(ref disjunctions, ref var_disjunctions, ref M, ref frames))
-                            return false;
-                    }
+                    max_time *= 2;
+                    disjunctions = start_frame.disjunctions;
+                    var_disjunctions = start_frame.var_disjunctions;
+                    M = start_frame.M;
+
+                    start_frame = new Frame(disjunctions, M, var_disjunctions, false_var);
                 }
             }
 
@@ -184,21 +202,27 @@ namespace PPSAT
         /// <param name="M"></param>
         /// <param name="frames"></param>
         /// <returns></returns>
-        private static bool Decide(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, ref Stack<Frame> frames)
+        private static bool Decide(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, ref Stack<Frame> frames, Random r)
         {
-            foreach(KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
+            //foreach(KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
+            foreach(Disjunction d in disjunctions)
             {
+                if (d.Count == 0)
+                    continue;
+
+                Variable v = d[r.Next() % d.Count];
+
                 //Find a variable that has at least one disjunction it can get rid of and try out a value
-                if(kp.Value.Count > 0)
+                //if(kp.Value.Count > 0)
                 {
                     //If we cannot add a variable or its negation, then we need to return false
-                    Variable v = new Variable(kp.Key, true);
+                    //Variable v = new Variable(kp.Key, true);
                     frames.Push(new Frame(disjunctions, M, var_disjunctions, v));
-                    if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, new Variable(kp.Key, true)))
+                    if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, v))
                     {
                         //If that didn't work, then this isn't a case where we can decide. We have to use the other value
                         frames.Pop();
-                        if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, new Variable(kp.Key, false)))
+                        if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, !v))
                             return false;
                     }
 
