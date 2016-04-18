@@ -160,9 +160,4 @@ public class PPSAT_Tester
     {
         if(VERBOSE) { System.out.println(p); }
     }
-
-    private static float ToSeconds(long time)
-    {
-        return (float)(time);
-    }
 }

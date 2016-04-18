@@ -45,7 +45,7 @@ namespace PPSAT
 
             //If it's solvable (satisfiable), then print out the model
             Random r = new Random();
-            if(Solve(ref disjunctions, ref var_disjunctions, out M, r))
+            if(Solve(ref disjunctions, ref var_disjunctions, out M, r, 0.2d))
             {
                 Console.WriteLine("SATISFIABLE");
 
@@ -140,13 +140,12 @@ namespace PPSAT
             return true;
         }
 
-        private static bool Solve(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, out List<Variable> M, Random r)
+        private static bool Solve(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, out List<Variable> M, Random r, double max_time)
         {
             M = new List<Variable>();
             Stack<Frame> frames = new Stack<Frame>();
             Variable false_var = new Variable(-1, false);
             Frame start_frame = new Frame(disjunctions, M, var_disjunctions, false_var);
-            double max_time = 0.2;
 
             DateTime start_time = DateTime.Now;
 
