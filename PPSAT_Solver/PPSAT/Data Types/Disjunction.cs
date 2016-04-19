@@ -27,48 +27,11 @@ namespace PPSAT
             return r;
         }
 
-        public bool Contains(Variable item)
-        {
-            for(int i = 0; i < vars.Count; i++) //IS THIS NECESSARY?
-                if (vars[i] == item) return true;
+        public bool Contains(Variable item) { return vars.Contains(item); }
 
-            return false;
-        }
+        public int IndexOf(Variable item) { return vars.IndexOf(item); }
 
-
-        public int IndexOf(Variable item)
-        {
-            for(int i = 0; i < vars.Count; i++) //IS THIS NECESSARY?
-                if(vars[i] == item)  return i; 
-
-            return -1;
-        }
-
-        public ArrayList IndexesOf(Variable item)
-        {
-            ArrayList ret = new ArrayList();
-            for(int i = 0; i < vars.Count; i++)
-            {
-                if (vars[i] == item)
-                    ret.Add(i);
-            }
-
-            return ret;
-        }
-
-        public bool Remove(Variable item)
-        {
-            foreach (Variable v in vars) //IS THIS NECESSARY? MAY ALREADY WORK WITH JUST vars.Remove(item)
-            {
-                if(v == item)
-                {
-                    vars.Remove(v);
-                    return true;
-                }
-            }
-
-            return false;
-        }
+        public bool Remove(Variable item) { return vars.Remove(item); }
 
         public void Insert(int index, Variable item) { vars.Insert(index, item); }
 

@@ -1,0 +1,6 @@
+C:\Users\Everybody\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\bin\Release\PPSAT.exe.config
+C:\Users\Everybody\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\bin\Release\PPSAT.exe
+C:\Users\Everybody\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\bin\Release\PPSAT.pdb
+C:\Users\Everybody\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\obj\Release\PPSAT.csprojResolveAssemblyReference.cache
+C:\Users\Everybody\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\obj\Release\PPSAT.exe
+C:\Users\Everybody\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\obj\Release\PPSAT.pdb

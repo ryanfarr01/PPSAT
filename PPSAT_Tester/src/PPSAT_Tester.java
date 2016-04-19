@@ -74,6 +74,7 @@ public class PPSAT_Tester
             Println("    Tests that were Satisfiable: " + NUM_SAT);
             Println("    Tests that were Unatisfiable: " + NUM_UNSAT);
 
+            System.gc();
             Println("");
         }
     }

@@ -10,9 +10,10 @@ namespace PPSAT
     public class SAT_Solver
     {
         public static List<Variable> finalModel; //The final list of variables to print out
+        public enum state { UNSOLVED, SAT, UNSAT };
         public static state ready = state.UNSOLVED; //0 indicates that we haven't determined if it's SAT or UNSAT
 
-        public enum state { UNSOLVED, SAT, UNSAT };
+        private static int _NumThreads = 3;
 
         /// <summary>
         /// Main function, which takes input of file path to the input file
@@ -20,9 +21,8 @@ namespace PPSAT
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            List<Disjunction> disjunctions; //The list of disjunctive clauses in the CNF
+            HashSet<Disjunction> disjunctions; //The list of disjunctive clauses in the CNF
             Dictionary<int, HashSet<Disjunction>> var_disjunctions; //Maps variables to a hashset of all of the disjunctions they're in
-            List<Variable> M; //The model - storing 
 
             //Check to see if the filepath was passed in
             if (args.Count() > 0)
@@ -49,52 +49,33 @@ namespace PPSAT
                 }
             }
 
-            //Create the frames in order to store copies of all data
-            Frame f1 = new Frame(disjunctions, new List<Variable>(), var_disjunctions, new Variable(-1, false));
-            Frame f2 = new Frame(disjunctions, new List<Variable>(), var_disjunctions, new Variable(-1, false));
-            Frame f3 = new Frame(disjunctions, new List<Variable>(), var_disjunctions, new Variable(-1, false));
-            Frame f4 = new Frame(disjunctions, new List<Variable>(), var_disjunctions, new Variable(-1, false));
+            Thread[] threads = new Thread[_NumThreads];
+            Random r = new Random(); //A random number generate to generate the seeds of the other random number generators
 
-            Random r1 = new Random(1);
-            Random r2 = new Random(2);
-            Random r3 = new Random(7);
-            Random r4 = new Random(19);
-
-            //Set up the first thread
-            List<Disjunction> d1 = f1.disjunctions;
-            Dictionary<int, HashSet<Disjunction>> vd1 = f1.var_disjunctions;
-            List<Variable> M1 = new List<Variable>();
-            Thread t1 = new Thread(() => Solve(ref d1, ref vd1, out M1, r1, 0.2d));
-            t1.Start();
-
-            //Set up the second thread
-            List<Disjunction> d2 = f2.disjunctions;
-            Dictionary<int, HashSet<Disjunction>> vd2 = f2.var_disjunctions;
-            List<Variable> M2 = new List<Variable>();
-            Thread t2 = new Thread(() => Solve(ref d2, ref vd2, out M2, r2, 0.1d));
-            t2.Start();
-
-            //Set up the second thread
-            List<Disjunction> d3 = f3.disjunctions;
-            Dictionary<int, HashSet<Disjunction>> vd3 = f3.var_disjunctions;
-            List<Variable> M3 = new List<Variable>();
-            Thread t3 = new Thread(() => Solve(ref d3, ref vd3, out M3, r3, 0.01d));
-            t3.Start();
-
-            //Set up the second thread
-            List<Disjunction> d4 = f4.disjunctions;
-            Dictionary<int, HashSet<Disjunction>> vd4 = f4.var_disjunctions;
-            List<Variable> M4 = new List<Variable>();
-            Thread t4 = new Thread(() => Solve(ref d4, ref vd4, out M4, r4, 0.5d));
-            t4.Start();
-
-            //Random r = new Random();
-            //Solve(ref disjunctions, ref var_disjunctions, out M, r, 0.2d);
-            while (ready == state.UNSOLVED)
+            //Create all of the threads
+            for(int i = 0; i < _NumThreads; i++)
             {
-                Thread.Sleep(2); //suspend for 10 milliseconds while we wait for one of the threads to solve it 
+                //Set up a frame so that we don't share references
+                Frame f = new Frame(disjunctions, new List<Variable>(), new Variable(-1, false));
+                Random rt = new Random(r.Next());
+
+                //Grab all of the data
+                HashSet<Disjunction> d = f.disjunctions;
+                Dictionary<int, HashSet<Disjunction>> vd = f.var_disjunctions;
+                List<Variable> Mt = new List<Variable>();
+
+                //Start the thread
+                threads[i] = new Thread(() => Solve(ref d, ref vd, out Mt, rt, 0.1d));
+                threads[i].Start();
             }
 
+            //While we aren't done
+            while (ready == state.UNSOLVED)
+            {
+                Thread.Sleep(2); //suspend for x milliseconds while we wait for one of the threads to solve it 
+            }
+
+            //Check if it was satisfiable
             if(ready == state.SAT)
             {
                 Console.WriteLine("SATISFIABLE");
@@ -102,22 +83,21 @@ namespace PPSAT
                 foreach (Variable v in finalModel)
                     Console.WriteLine(v.ID + " : " + v.value);
             }
-            else
+            else //Otherwise it was unsatisfiable
             {
                 Console.WriteLine("UNSATISFIABLE");
             }
 
-            t1.Abort();
-            t2.Abort();
-            t3.Abort();
-            t4.Abort();
+            //Close all threads
+            foreach (Thread t in threads)
+                t.Abort();
 
             //Console.ReadLine(); //DELETE
         }
 
-        private static bool ReadFile(out List<Disjunction> disjunctions, out Dictionary<int, HashSet<Disjunction>> var_disjunctions, string path)
+        private static bool ReadFile(out HashSet<Disjunction> disjunctions, out Dictionary<int, HashSet<Disjunction>> var_disjunctions, string path)
         {
-            disjunctions = new List<Disjunction>();
+            disjunctions = new HashSet<Disjunction>();
             var_disjunctions = new Dictionary<int, HashSet<Disjunction>>();
 
             int lines, vars;
@@ -198,17 +178,17 @@ namespace PPSAT
             return true;
         }
 
-        private static bool Solve(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, out List<Variable> M, Random r, double max_time)
+        private static bool Solve(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, out List<Variable> M, Random r, double max_time)
         {
             M = new List<Variable>();
             Stack<Frame> frames = new Stack<Frame>();
             Variable false_var = new Variable(-1, false);
-            Frame start_frame = new Frame(disjunctions, M, var_disjunctions, false_var);
+            Frame start_frame = new Frame(disjunctions, M, false_var);
 
             DateTime start_time = DateTime.Now;
 
             //Go until it is complete
-            while(!Complete(var_disjunctions, disjunctions))
+            while(!Complete(disjunctions))
             {
                 if ((DateTime.Now - start_time).TotalSeconds < max_time)
                 {
@@ -246,12 +226,12 @@ namespace PPSAT
                 }
                 else //Restart, we timed out
                 {
-                    max_time *= 2;
+                    max_time *= 3;
                     disjunctions = start_frame.disjunctions;
                     var_disjunctions = start_frame.var_disjunctions;
                     M = start_frame.M;
 
-                    start_frame = new Frame(disjunctions, M, var_disjunctions, false_var);
+                    start_frame = new Frame(disjunctions, M, false_var);
                 }
             }
 
@@ -269,7 +249,7 @@ namespace PPSAT
         /// <param name="M"></param>
         /// <param name="frames"></param>
         /// <returns></returns>
-        private static bool Decide(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, ref Stack<Frame> frames, Random r)
+        private static bool Decide(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, ref Stack<Frame> frames, Random r)
         {
             //foreach(KeyValuePair<int, HashSet<Disjunction>> kp in var_disjunctions)
             foreach(Disjunction d in disjunctions)
@@ -279,23 +259,18 @@ namespace PPSAT
 
                 Variable v = d[r.Next() % d.Count];
 
-                //Find a variable that has at least one disjunction it can get rid of and try out a value
-                //if(kp.Value.Count > 0)
+                //If we cannot add a variable or its negation, then we need to return false
+                frames.Push(new Frame(disjunctions, M, v));
+                if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, v))
                 {
-                    //If we cannot add a variable or its negation, then we need to return false
-                    //Variable v = new Variable(kp.Key, true);
-                    frames.Push(new Frame(disjunctions, M, var_disjunctions, v));
-                    if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, v))
-                    {
-                        //If that didn't work, then this isn't a case where we can decide. We have to use the other value
-                        frames.Pop();
-                        if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, !v))
-                            return false;
-                    }
-
-                    //If we get to this point, we were able to successfully change a variable
-                    return true;
+                    //If that didn't work, then this isn't a case where we can decide. We have to use the other value
+                    frames.Pop();
+                    if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, !v))
+                        return false;
                 }
+
+                //If we get to this point, we were able to successfully change a variable
+                return true;
             }
 
             //If we don't return at this point, then all of the disjunctions have been taken care of
@@ -312,7 +287,7 @@ namespace PPSAT
         /// <param name="M"></param>
         /// <param name="frames"></param>
         /// <returns></returns>
-        private static bool Fail_Or_Backtrack(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, ref Stack<Frame> frames)
+        private static bool Fail_Or_Backtrack(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, ref Stack<Frame> frames)
         {
             if (frames.Count == 0) return false;
 
@@ -336,7 +311,7 @@ namespace PPSAT
         /// <param name="var_disjunctions"></param>
         /// <param name="M"></param>
         /// <returns></returns>
-        private static Variable Propagate(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M)
+        private static Variable Propagate(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M)
         {
             foreach(Disjunction d in disjunctions)
                 if (d.Count == 1) return d[0];
@@ -351,7 +326,7 @@ namespace PPSAT
         /// <param name="M"></param>
         /// <param name="v"></param>
         /// <returns></returns>
-        private static bool AddVariable(ref List<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, Variable v)
+        private static bool AddVariable(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, Variable v)
         {
             //Check to see if there's a contradiction
             for(int i = 0; i < M.Count; i++)
@@ -407,7 +382,7 @@ namespace PPSAT
         /// </summary>
         /// <param name="var_disjunctions"></param>
         /// <returns></returns>
-        private static bool Complete(Dictionary<int, HashSet<Disjunction>> var_disjunctions, List<Disjunction> disjunctions)
+        private static bool Complete(HashSet<Disjunction> disjunctions)
         {
             //bool empty = true;
             if (disjunctions.Count == 0)
