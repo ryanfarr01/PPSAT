@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,15 +9,20 @@ namespace PPSAT
 {
     public class SAT_Solver
     {
+        public static List<Variable> finalModel; //The final list of variables to print out
+        public static state ready = state.UNSOLVED; //0 indicates that we haven't determined if it's SAT or UNSAT
+
+        public enum state { UNSOLVED, SAT, UNSAT };
+
         /// <summary>
         /// Main function, which takes input of file path to the input file
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            List<Disjunction> disjunctions;
-            Dictionary<int, HashSet<Disjunction>> var_disjunctions;
-            List<Variable> M;
+            List<Disjunction> disjunctions; //The list of disjunctive clauses in the CNF
+            Dictionary<int, HashSet<Disjunction>> var_disjunctions; //Maps variables to a hashset of all of the disjunctions they're in
+            List<Variable> M; //The model - storing 
 
             //Check to see if the filepath was passed in
             if (args.Count() > 0)
@@ -43,16 +49,68 @@ namespace PPSAT
                 }
             }
 
-            //If it's solvable (satisfiable), then print out the model
-            Random r = new Random();
-            if(Solve(ref disjunctions, ref var_disjunctions, out M, r, 0.2d))
+            //Create the frames in order to store copies of all data
+            Frame f1 = new Frame(disjunctions, new List<Variable>(), var_disjunctions, new Variable(-1, false));
+            Frame f2 = new Frame(disjunctions, new List<Variable>(), var_disjunctions, new Variable(-1, false));
+            Frame f3 = new Frame(disjunctions, new List<Variable>(), var_disjunctions, new Variable(-1, false));
+            Frame f4 = new Frame(disjunctions, new List<Variable>(), var_disjunctions, new Variable(-1, false));
+
+            Random r1 = new Random(1);
+            Random r2 = new Random(2);
+            Random r3 = new Random(7);
+            Random r4 = new Random(19);
+
+            //Set up the first thread
+            List<Disjunction> d1 = f1.disjunctions;
+            Dictionary<int, HashSet<Disjunction>> vd1 = f1.var_disjunctions;
+            List<Variable> M1 = new List<Variable>();
+            Thread t1 = new Thread(() => Solve(ref d1, ref vd1, out M1, r1, 0.2d));
+            t1.Start();
+
+            //Set up the second thread
+            List<Disjunction> d2 = f2.disjunctions;
+            Dictionary<int, HashSet<Disjunction>> vd2 = f2.var_disjunctions;
+            List<Variable> M2 = new List<Variable>();
+            Thread t2 = new Thread(() => Solve(ref d2, ref vd2, out M2, r2, 0.1d));
+            t2.Start();
+
+            //Set up the second thread
+            List<Disjunction> d3 = f3.disjunctions;
+            Dictionary<int, HashSet<Disjunction>> vd3 = f3.var_disjunctions;
+            List<Variable> M3 = new List<Variable>();
+            Thread t3 = new Thread(() => Solve(ref d3, ref vd3, out M3, r3, 0.01d));
+            t3.Start();
+
+            //Set up the second thread
+            List<Disjunction> d4 = f4.disjunctions;
+            Dictionary<int, HashSet<Disjunction>> vd4 = f4.var_disjunctions;
+            List<Variable> M4 = new List<Variable>();
+            Thread t4 = new Thread(() => Solve(ref d4, ref vd4, out M4, r4, 0.5d));
+            t4.Start();
+
+            //Random r = new Random();
+            //Solve(ref disjunctions, ref var_disjunctions, out M, r, 0.2d);
+            while (ready == state.UNSOLVED)
+            {
+                Thread.Sleep(2); //suspend for 10 milliseconds while we wait for one of the threads to solve it 
+            }
+
+            if(ready == state.SAT)
             {
                 Console.WriteLine("SATISFIABLE");
 
-                foreach(Variable v in M)
+                foreach (Variable v in finalModel)
                     Console.WriteLine(v.ID + " : " + v.value);
             }
-            else Console.WriteLine("UNSATISFIABLE"); //Otherwise it's unsatisfiable
+            else
+            {
+                Console.WriteLine("UNSATISFIABLE");
+            }
+
+            t1.Abort();
+            t2.Abort();
+            t3.Abort();
+            t4.Abort();
 
             //Console.ReadLine(); //DELETE
         }
@@ -165,7 +223,11 @@ namespace PPSAT
                             {
                                 //If both of these fail, then we need to fail or backtrack
                                 if (!Fail_Or_Backtrack(ref disjunctions, ref var_disjunctions, ref M, ref frames))
+                                {
+                                    ready = state.UNSAT;
+                                    finalModel = M;
                                     return false;
+                                }
                             }
                         }
                     }
@@ -174,7 +236,11 @@ namespace PPSAT
                         if (!Decide(ref disjunctions, ref var_disjunctions, ref M, ref frames, r))
                         {
                             if (!Fail_Or_Backtrack(ref disjunctions, ref var_disjunctions, ref M, ref frames))
+                            {
+                                ready = state.UNSAT;
+                                finalModel = M;
                                 return false;
+                            }
                         }
                     }
                 }
@@ -189,6 +255,8 @@ namespace PPSAT
                 }
             }
 
+            ready = state.SAT;
+            finalModel = M;
             return true;
         }
 
