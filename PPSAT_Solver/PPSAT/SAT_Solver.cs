@@ -10,8 +10,8 @@ namespace PPSAT
     public class SAT_Solver
     {
         public static List<Variable> finalModel; //The final list of variables to print out
-        public enum state { UNSOLVED, SAT, UNSAT };
-        public static state ready = state.UNSOLVED; //0 indicates that we haven't determined if it's SAT or UNSAT
+        public enum state { UNSOLVED, SAT, UNSAT }; //Enum to indicate teh state of the program.
+        public static state ready = state.UNSOLVED; //UNSOLVED indicates that we haven't determined if it's SAT or UNSAT
 
         private static int _NumThreads = 3;
 
@@ -27,11 +27,24 @@ namespace PPSAT
             //Check to see if the filepath was passed in
             if (args.Count() > 0)
             {
-                //Ttry to read the file
+                //Try to read the file
                 if (!ReadFile(out disjunctions, out var_disjunctions, args[0]))
                 {
                     Console.WriteLine("Could not read file. Exiting...");
                     return;
+                }
+
+                for(int i = 1; i < args.Length; i++)
+                {
+                    if(args[i].Equals("-t"))
+                    {
+                        bool success = int.TryParse(args[i + 1], out _NumThreads);
+                        if(!success)
+                        {
+                            Console.WriteLine("Failed to get the threads value, using default of 3");
+                            _NumThreads = 3;
+                        }
+                    }
                 }
             }
             else
