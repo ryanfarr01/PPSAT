@@ -2,111 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59d9215b-ca06-4d97-aaef-245a382745be" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-0.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-1.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-10.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-11.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-12.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-13.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-14.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-15.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-16.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-17.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-18.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-19.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-2.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-20.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-21.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-22.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-23.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-24.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-25.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-26.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-27.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-28.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-29.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-3.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-30.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-31.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-32.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-33.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-34.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-35.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-36.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-37.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-38.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-39.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-4.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-40.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-41.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-42.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-43.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-44.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-45.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-46.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-47.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-48.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-49.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-5.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-50.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-51.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-52.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-53.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-54.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-55.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-56.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-57.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-58.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-59.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-6.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-60.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-61.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-62.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-63.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-64.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-65.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-66.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-67.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-68.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-69.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-7.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-70.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-71.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-72.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-73.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-74.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-75.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-76.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-77.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-78.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-79.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-8.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-80.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-81.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-82.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-83.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-84.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-85.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-86.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-87.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-88.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-89.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-9.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-90.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-91.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-92.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-93.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-94.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-95.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-96.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-97.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-98.cnf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Tests/test-99.cnf" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT/bin/Release/PPSAT.vshost.exe.manifest" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT.sln" afterPath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT.sln" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT/SAT_Solver.cs" afterPath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT/SAT_Solver.cs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT/obj/Release/PPSAT.csproj.FileListAbsolute.txt" afterPath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT/obj/Release/PPSAT.csproj.FileListAbsolute.txt" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PPSAT_Tester/KFoldTesting.class" afterPath="$PROJECT_DIR$/out/production/PPSAT_Tester/KFoldTesting.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/KFoldTesting.java" afterPath="$PROJECT_DIR$/src/KFoldTesting.java" />
     </list>
     <ignored path="PPSAT_Tester.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -131,8 +29,8 @@
       <file leaf-file-name="PPSAT_Tester.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="799">
-              <caret line="50" column="65" selection-start-line="0" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
+            <state relative-caret-position="85">
+              <caret line="8" column="54" selection-start-line="8" selection-start-column="54" selection-end-line="9" selection-end-column="50" />
               <folding />
             </state>
           </provider>
@@ -141,12 +39,9 @@
       <file leaf-file-name="KFoldTesting.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/KFoldTesting.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="238">
-              <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-              <folding>
-                <element signature="n#!!doc" expanded="true" />
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="272">
+              <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -178,10 +73,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1616" />
-    <option name="height" value="876" />
+    <option name="x" value="-7" />
+    <option name="width" value="974" />
+    <option name="height" value="1047" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
     <OptionsSetting value="true" id="Add" />
@@ -210,6 +104,7 @@
     <panes>
       <pane id="Scratches" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -238,27 +133,12 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="Tests" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PPSAT_Tester" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PPSAT_Tester" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="src" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -562,21 +442,22 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
-    <editor active="false" />
+    <frame x="-7" y="0" width="974" height="1047" extended-state="0" />
+    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32898173" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32870865" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30287206" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30202776" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.155" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18162839" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -586,7 +467,6 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
@@ -615,23 +495,21 @@
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
       <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
+      <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="799">
           <caret line="50" column="65" selection-start-line="0" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/KFoldTesting.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/KFoldTesting.java" />
     <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -642,14 +520,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/test-13.cnf" />
     <entry file="file://$PROJECT_DIR$/test-0.cnf" />
-    <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="799">
-          <caret line="50" column="65" selection-start-line="0" selection-start-column="0" selection-end-line="164" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Tests/test-0.cnf">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -657,14 +527,83 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/test-19.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/test-18.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/test-21.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/test-15.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/test-11.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/test-6.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/test-2.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Tests/test-1.cnf">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="8" column="54" selection-start-line="8" selection-start-column="54" selection-end-line="9" selection-end-column="50" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/KFoldTesting.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="14" column="5" selection-start-line="14" selection-start-column="5" selection-end-line="14" selection-end-column="5" />
-          <folding>
-            <element signature="n#!!doc" expanded="true" />
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state relative-caret-position="272">
+          <caret line="28" column="47" selection-start-line="28" selection-start-column="47" selection-end-line="28" selection-end-column="47" />
+          <folding />
         </state>
       </provider>
     </entry>

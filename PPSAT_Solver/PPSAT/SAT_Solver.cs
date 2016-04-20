@@ -23,7 +23,7 @@ namespace PPSAT
         {
             HashSet<Disjunction> disjunctions; //The list of disjunctive clauses in the CNF
             Dictionary<int, HashSet<Disjunction>> var_disjunctions; //Maps variables to a hashset of all of the disjunctions they're in
-
+            
             //Check to see if the filepath was passed in
             if (args.Count() > 0)
             {
@@ -36,7 +36,7 @@ namespace PPSAT
 
                 for(int i = 1; i < args.Length; i++)
                 {
-                    if(args[i].Equals("-t"))
+                    if(args[i].Replace(" ", "").Equals("-t"))
                     {
                         bool success = int.TryParse(args[i + 1], out _NumThreads);
                         if(!success)
@@ -100,6 +100,8 @@ namespace PPSAT
             {
                 Console.WriteLine("UNSATISFIABLE");
             }
+
+            Console.WriteLine("Number of threads: " + threads.Length);
 
             //Close all threads
             foreach (Thread t in threads)

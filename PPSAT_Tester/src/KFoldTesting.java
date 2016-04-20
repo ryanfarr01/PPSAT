@@ -10,6 +10,7 @@ public class KFoldTesting
     private static String UNSATISFIABLE = "UNSATISFIABLE";
     private static String SATISFIABLE = "SATISFIABLE";
     private static String PPSAT_EXE = "PPSAT.exe";
+    private static int NUM_FILES = 70;
 
     public static void main(String[] args) throws Exception
     {
@@ -25,7 +26,7 @@ public class KFoldTesting
         {
             System.out.println("Testing number of threads: " + threads);
             long start_time = System.nanoTime();
-            for (int i = 0; i < 70; i++)
+            for (int i = 0; i < NUM_FILES; i++)
             {
                 String test_file = "Tests/test-" + i + ".cnf";
 
@@ -34,7 +35,7 @@ public class KFoldTesting
             }
             long end_time = System.nanoTime();
 
-            System.out.println("Finished. Time: " + ((end_time - start_time)/70));
+            System.out.println("Finished. Time: " + ((end_time - start_time)/NUM_FILES));
             System.out.println();
         }
 
@@ -43,7 +44,7 @@ public class KFoldTesting
 
     private static boolean TestExecutable(File file, String test_file, int num_threads) throws Exception
     {
-        ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath(), test_file, Integer.toString(num_threads));
+        ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath(), test_file, " -t ", Integer.toString(num_threads));
 
         Process process = pb.start();
         process.waitFor();
