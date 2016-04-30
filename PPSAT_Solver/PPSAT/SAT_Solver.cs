@@ -10,10 +10,10 @@ namespace PPSAT
     public class SAT_Solver
     {
         public static List<Variable> finalModel; //The final list of variables to print out
-        public enum state { UNSOLVED, SAT, UNSAT }; //Enum to indicate teh state of the program.
+        public enum state { UNSOLVED, SAT, UNSAT }; //Enum to indicate the state of the program.
         public static state ready = state.UNSOLVED; //UNSOLVED indicates that we haven't determined if it's SAT or UNSAT
 
-        private static int _NumThreads = 3;
+        private static int _NumThreads = 1; //The total number of instances that the program tries to solve simultaneously (with different random seeds)
 
         /// <summary>
         /// Main function, which takes input of file path to the input file
@@ -41,8 +41,8 @@ namespace PPSAT
                         bool success = int.TryParse(args[i + 1], out _NumThreads);
                         if(!success)
                         {
-                            Console.WriteLine("Failed to get the threads value, using default of 3");
-                            _NumThreads = 3;
+                            Console.WriteLine("Failed to get the threads value, using default of 1");
+                            _NumThreads = 1;
                         }
                     }
                 }

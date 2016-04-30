@@ -9,3 +9,5 @@ C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\bin\Release\PPSAT.ex
 C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\bin\Release\PPSAT.pdb
 C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\obj\Release\PPSAT.exe
 C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\obj\Release\PPSAT.pdb
+C:\Users\Everybody\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\bin\Release\PPSAT.exe.CodeAnalysisLog.xml
+C:\Users\Everybody\Documents\GitHub\PPSAT\PPSAT_Solver\PPSAT\bin\Release\PPSAT.exe.lastcodeanalysissucceeded
