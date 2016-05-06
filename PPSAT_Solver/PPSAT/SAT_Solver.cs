@@ -7,6 +7,27 @@ using System.Threading.Tasks;
 
 namespace PPSAT
 {
+    /// <summary>
+    /// Author: Ryan Farr
+    /// Date: May 05, 2016
+    /// Class: CS 5110/6110 - Rigorous System Design
+    /// 
+    /// SAT_Solver - a partially parallelized satisfiability solver that uses two techniques of
+    ///      concurrency/parallelization. 1. Use multiple threads to search through the decision
+    ///      tree simultaneously, or 2. Use multiple threads to go down both sides of Decide.
+    ///      This uses the DPLL algorithm.
+    ///      
+    /// Input: 
+    ///      filepath = the location of the CNF file to be read
+    ///      -t = the number of threads to be used for parallelization technique 1. Must be followed by an integer greater than 0
+    ///      -dt = the number of threads to be used for parallelization technique 2. Must be followed by an integer greater than or equal to 0
+    ///      
+    /// Data:
+    ///      List<Variable> M = the model, which is the current set of variable values that may or may not satisfy the boolean expression
+    ///      HashSet<Disjunction> disjunctions = the set of all disjunctions within the input file
+    ///      Dictionary var_disjunctions = dictionary that maps all variables to the complete list of disjunctions that they are in
+    ///      Stack<Frame> frames = the set of frames used for backtracking
+    /// </summary>
     public class SAT_Solver
     {
         /// <summary>
@@ -27,12 +48,12 @@ namespace PPSAT
         /// <summary>
         /// The number of threads to run this program concurrently
         /// </summary>
-        private static int _NumThreads = 1;
+        private static int _SolveThreads = 1;
 
         /// <summary>
         /// The number fo threads that can run at once per program
         /// </summary>
-        private static int _ThreadsPerProgram = 4;
+        private static int _DecisionThreads = 4;
 
         /// <summary>
         /// The object that we lock on in order to make sure that the
@@ -40,6 +61,10 @@ namespace PPSAT
         /// </summary>
         private static Object _LockObj = new Object();
 
+        /// <summary>
+        /// List of the threads used when going down both Decide paths.
+        /// This is used to make sure everything is closed at the end of the run.
+        /// </summary>
         private static List<Thread> _ExtraThreads = new List<Thread>();
 
         /// <summary>
@@ -61,16 +86,27 @@ namespace PPSAT
                     return;
                 }
 
+                //Get the thread values
                 for(int i = 1; i < args.Length; i++)
                 {
-                    if(args[i].Replace(" ", "").Equals("-t"))
+                    String s = args[i].Replace(" ", "");
+                    switch(s)
                     {
-                        bool success = int.TryParse(args[i + 1], out _NumThreads);
-                        if(!success || _NumThreads <= 0)
-                        {
-                            Console.WriteLine("Failed to get the threads value or value was less than 1, using default of 1");
-                            _NumThreads = 1;
-                        }
+                        case "-t":
+                            if (!int.TryParse(args[++i], out _SolveThreads) || _SolveThreads < 1)
+                            {
+                                Console.WriteLine("Failed to get the threads value or value was less tahn 1, using default of 1");
+                                _SolveThreads = 1;
+                            }
+                            break;
+
+                        case "-dt":
+                            if (!int.TryParse(args[++i], out _DecisionThreads) || _DecisionThreads < 0)
+                            {
+                                Console.WriteLine("Failed to get number of threads for Decision or it was less than 0. Defaulting to 0");
+                                _DecisionThreads = 0;
+                            }
+                            break;
                     }
                 }
             }
@@ -89,11 +125,12 @@ namespace PPSAT
                 }
             }
 
-            Thread[] threads = new Thread[_NumThreads];
+            //Create the threads list
+            Thread[] threads = new Thread[_SolveThreads];
             Random r = new Random(); //A random number generate to generate the seeds of the other random number generators
 
             //Create all of the threads
-            for(int i = 0; i < _NumThreads; i++)
+            for(int i = 0; i < _SolveThreads; i++)
             {
                 //Set up a frame so that we don't share references
                 Frame f = new Frame(disjunctions, new List<Variable>(), new Variable(-1, false));
@@ -135,23 +172,35 @@ namespace PPSAT
                 t.Abort();
             foreach (Thread t in _ExtraThreads)
                 t.Abort();
-
-            //Console.ReadLine();
         }
 
+        /// <summary>
+        /// Function that takes in a .CNF file and parses it into disjunctions and var_disjunctions.
+        /// Additionally, takes out all tautologies and duplicate variables within disjunctions.
+        /// </summary>
+        /// <param name="disjunctions"></param>
+        /// <param name="var_disjunctions"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
         private static bool ReadFile(out HashSet<Disjunction> disjunctions, out Dictionary<int, HashSet<Disjunction>> var_disjunctions, string path)
         {
+            //The DS to be given back to the caller
             disjunctions = new HashSet<Disjunction>();
             var_disjunctions = new Dictionary<int, HashSet<Disjunction>>();
 
+            //The variables in the first non-comment line of a .CNF file
             int lines, vars;
             string line;
+
+            //Grab the file
             System.IO.StreamReader file = null;
             try { file = new System.IO.StreamReader(path); }
             catch (Exception) { return false; }
 
+            //Read every line of the file
             while ((line = file.ReadLine()) != null)
             {
+                //Split based on spaces to get variables
                 string[] parts = line.Split(' ');
                 if (parts.Count() > 0)
                 {
@@ -222,22 +271,47 @@ namespace PPSAT
             return true;
         }
 
+        /// <summary>
+        /// Function that takes in the set of disjunctions, the variable mappings, model, a Random, and a restart time
+        /// and returns true if it's satisfiable or false if it is not satisfiable.
+        /// </summary>
+        /// <param name="disjunctions"></param>
+        /// <param name="var_disjunctions"></param>
+        /// <param name="M"></param>
+        /// <param name="r"></param>
+        /// <param name="max_time"></param>
+        /// <returns></returns>
         private static bool DetermineSAT(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions,
                                          out List<Variable> M, Random r, float max_time)
         {
-            M = new List<Variable>();
+            M = new List<Variable>(); //Create the model
             Stack<Frame> frames = new Stack<Frame>();
             Variable false_var = new Variable(-1, false);
             Frame start_frame = new Frame(disjunctions, M, false_var);
 
+            //Solve it
             return Solve(ref disjunctions, ref var_disjunctions, ref M, ref frames, ref r, start_frame, false_var, max_time, true);
         }
 
+        /// <summary>
+        /// Function that takes in all datastructures and determines satisfiability by applying the DPLL algorithm
+        /// until model is found which satisfies all disjunctions, or alternatively a contradiction is found.
+        /// Returns true if it is satisfiable and false otherwise.
+        /// </summary>
+        /// <param name="disjunctions"></param>
+        /// <param name="var_disjunctions"></param>
+        /// <param name="M"></param>
+        /// <param name="frames"></param>
+        /// <param name="r"></param>
+        /// <param name="start_frame"></param>
+        /// <param name="false_var"></param>
+        /// <param name="max_time"></param>
+        /// <param name="main_thread"></param>
+        /// <returns></returns>
         private static bool Solve(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M, 
                                   ref Stack<Frame> frames, ref Random r, Frame start_frame, Variable false_var, float max_time, bool main_thread)
         {
             DateTime start_time = DateTime.Now;
-            //return false;
 
             //Go until it is complete
             while (!Complete(disjunctions))
@@ -256,6 +330,8 @@ namespace PPSAT
                                 //If both of these fail, then we need to fail or backtrack
                                 if (!Fail_Or_Backtrack(ref disjunctions, ref var_disjunctions, ref M, ref frames))
                                 {
+                                    //Only the main thread can tell if there is a true contradiction, so only let the main thread update the 
+                                    //ready status
                                     if (main_thread)
                                     {
                                         ready = state.UNSAT;
@@ -272,7 +348,9 @@ namespace PPSAT
                         {
                             if (!Fail_Or_Backtrack(ref disjunctions, ref var_disjunctions, ref M, ref frames))
                             {
-                                if(main_thread)
+                                //Only the main thread can tell if there is a true contradiction, so only let the main thread update the 
+                                //ready status
+                                if (main_thread)
                                 {
                                     ready = state.UNSAT;
                                     finalModel = M;
@@ -284,7 +362,7 @@ namespace PPSAT
                 }
                 else //Restart, we timed out
                 {
-                    max_time *= 3;
+                    max_time *= 3; //Duplicate time by 3
                     disjunctions = start_frame.disjunctions;
                     var_disjunctions = start_frame.var_disjunctions;
                     M = start_frame.M;
@@ -318,7 +396,7 @@ namespace PPSAT
 
                 Variable v = d[r.Next() % d.Count];
 
-                if(_ThreadsPerProgram > 0)
+                if(_DecisionThreads > 0)
                     return ConcurrentDecide(ref disjunctions, ref var_disjunctions, ref M, ref frames, ref r, start_frame, v, false_var, max_time);
 
                 //If we cannot add a variable or its negation, then we need to return false
@@ -340,50 +418,89 @@ namespace PPSAT
             return true;
         }
 
+        /// <summary>
+        /// Version of decide that is used when we want to go down both paths on the decision variable. This function
+        /// acts just as the other Decide, but creates two threads to traverse the tree simultaneously. Updates
+        /// the ready status if it finds a model that works, otherwise it simply returns.
+        /// </summary>
+        /// <param name="disjunctions"></param>
+        /// <param name="var_disjunctions"></param>
+        /// <param name="M"></param>
+        /// <param name="frames"></param>
+        /// <param name="r"></param>
+        /// <param name="start_frame"></param>
+        /// <param name="v"></param>
+        /// <param name="false_var"></param>
+        /// <param name="max_time"></param>
+        /// <returns></returns>
         private static bool ConcurrentDecide(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M,
                                              ref Stack<Frame> frames, ref Random r, Frame start_frame, Variable v, Variable false_var, float max_time)
         {
+            //Lock the number of available threads to decrement
             lock(_LockObj)
             {
-                _ThreadsPerProgram--;
+                _DecisionThreads--;
             }
 
+            //Create frames so that we don't use duplicate references
             Frame frame1 = new Frame(disjunctions, M, v);
             Frame frame2 = new Frame(disjunctions, M, !v);
             Frame new_start_frame = new Frame(start_frame.disjunctions, start_frame.M, start_frame.decision_variable);
 
+            //Set up the temporary variables to be used by thread 1
             HashSet<Disjunction> d = frame1.disjunctions;
             Dictionary<int, HashSet<Disjunction>> vd = frame1.var_disjunctions;
             List<Variable> m = frame1.M;
             Stack<Frame> new_frames1 = new Stack<Frame>();
             Random rand = r;
 
+            //Start thread 1
             Thread t1 = new Thread(() => AddVarAndDecide(ref d, ref vd, ref m, ref new_frames1, ref rand, start_frame, v, false_var, max_time));
             _ExtraThreads.Add(t1);
             t1.Start();
 
+            //Set up the variables for thread 2
             HashSet<Disjunction> d2 = frame2.disjunctions;
             Dictionary<int, HashSet<Disjunction>> vd2 = frame2.var_disjunctions;
             List<Variable> m2 = frame2.M;
             Stack<Frame> new_frames2 = new Stack<Frame>();
+
+            //Start thread 2
             Thread t2 = new Thread(()=> AddVarAndDecide(ref d2, ref vd2, ref m2, ref new_frames2, ref rand, new_start_frame, !v, false_var, max_time));
             _ExtraThreads.Add(t2);
             t2.Start();
 
+            //Wait for them to return
             t1.Join();
             t2.Join();
 
+            //Re-lock so that we can increment
             lock (_LockObj)
             {
-                _ThreadsPerProgram++;
+                _DecisionThreads++;
             }
 
+            //Return false if the state is still unsolved
             if (ready == state.UNSOLVED)
                 return false;
 
             return true;
         }
 
+        /// <summary>
+        /// Function that is called by each thread in Concurrent Decide. Takes in teh data structures, determines if the variable
+        /// can be added at all, and then searches the decision tree if it can be added without there being a 
+        /// contradiction.
+        /// </summary>
+        /// <param name="disjunctions"></param>
+        /// <param name="var_disjunctions"></param>
+        /// <param name="M"></param>
+        /// <param name="frames"></param>
+        /// <param name="r"></param>
+        /// <param name="start_frame"></param>
+        /// <param name="v"></param>
+        /// <param name="false_var"></param>
+        /// <param name="max_time"></param>
         private static void AddVarAndDecide(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, ref List<Variable> M,
                                              ref Stack<Frame> frames, ref Random r, Frame start_frame, Variable v, Variable false_var, float max_time)
         {
@@ -405,14 +522,16 @@ namespace PPSAT
         private static bool Fail_Or_Backtrack(ref HashSet<Disjunction> disjunctions, ref Dictionary<int, HashSet<Disjunction>> var_disjunctions, 
                                               ref List<Variable> M, ref Stack<Frame> frames)
         {
+            //If we have no more frames, simply return false (fail)
             if (frames.Count == 0) return false;
 
+            //Pop the frame and reset the state
             Frame f = frames.Pop();
             disjunctions = f.disjunctions;
             var_disjunctions = f.var_disjunctions;
             M = f.M;
             
-            //BE CAREFUL WITH THIS RECURSION. SHOULD CONSIDER DOING IT IN A LOOP
+            //Recursively try to add the variable and backtrack/fail if necessary
             if (!AddVariable(ref disjunctions, ref var_disjunctions, ref M, !f.decision_variable))
                 return Fail_Or_Backtrack(ref disjunctions, ref var_disjunctions, ref M, ref frames);
 

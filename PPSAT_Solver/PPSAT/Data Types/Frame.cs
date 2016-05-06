@@ -6,13 +6,35 @@ using System.Threading.Tasks;
 
 namespace PPSAT
 {
+    /// <summary>
+    /// Frame is a snapshot of all data at a given moment in time. Duplicates all data
+    /// given to the constructor so that the memory does not reference the same areas.
+    /// 
+    /// This is used for backtracking in the DPLL algorithm.
+    /// </summary>
     public class Frame
     {
+        /// <summary>
+        /// The variable that was chosen to be put in the model on Decide
+        /// </summary>
         public Variable decision_variable                              { get { return _decision_variable_; } }
+
+        /// <summary>
+        /// The set of disjunctions that form the expression
+        /// </summary>
         public HashSet<Disjunction> disjunctions                       { get { return _disjunctions_; } }
+
+        /// <summary>
+        /// The model
+        /// </summary>
         public List<Variable> M                                        { get { return _M_; } }
+
+        /// <summary>
+        /// The dictionary that maps every variable to the set of disjunctions that it is within
+        /// </summary>
         public Dictionary<int, HashSet<Disjunction>> var_disjunctions  { get { return _var_disjunctions_; } }
 
+        //The actual set of data so that this is not altered by the user
         private HashSet<Disjunction> _disjunctions_;
         private List<Variable> _M_;
         private Dictionary<int, HashSet<Disjunction>> _var_disjunctions_;

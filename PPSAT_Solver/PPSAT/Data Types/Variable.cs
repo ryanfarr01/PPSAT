@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 
 namespace PPSAT
 {
+    /// <summary>
+    /// Class that represents one boolean variable. This is 
+    /// simply a wrapper for a boolean.
+    /// </summary>
     public class Variable
     {
         /// <summary>

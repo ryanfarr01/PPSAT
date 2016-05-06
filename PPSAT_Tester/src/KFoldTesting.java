@@ -22,7 +22,7 @@ public class KFoldTesting
         }
         System.out.println("Found PPSAT.exe");
 
-        for(int threads = 1; threads <= 30; threads++)
+        for(int threads = 0; threads <= 30; threads++)
         {
             System.out.println("Testing number of threads: " + threads);
             long start_time = System.nanoTime();
@@ -44,7 +44,7 @@ public class KFoldTesting
 
     private static boolean TestExecutable(File file, String test_file, int num_threads) throws Exception
     {
-        ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath(), test_file, " -t ", Integer.toString(num_threads));
+        ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath(), test_file, " -dt ", Integer.toString(num_threads));
 
         Process process = pb.start();
         process.waitFor();
