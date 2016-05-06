@@ -73,7 +73,7 @@ public class PPSAT_Tester
             Println("Testing minisat");
             boolean sat_minisat = TestExecutable(minisat, test_file);
             Println("Testing PPSAT");
-            boolean sat_ppsat = TestExecutable(PPSAT, test_file, 1, 4);
+            boolean sat_ppsat = TestExecutable(PPSAT, test_file, 4, 0);
             Println("Finished");
 
             //If don't agree, keep the file and inform the user

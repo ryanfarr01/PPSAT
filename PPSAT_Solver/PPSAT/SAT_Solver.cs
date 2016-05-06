@@ -132,6 +132,9 @@ namespace PPSAT
 
                 Random r = new Random(); //A random number generate to generate the seeds of the other random number generators
 
+                //Update threads array
+                threads = new Thread[_SolveThreads];
+
                 //Create all of the threads
                 for (int i = 0; i < _SolveThreads; i++)
                 {
@@ -182,7 +185,7 @@ namespace PPSAT
             catch (Exception)
             {
                 //Close all threads
-                lock(_LockObj)
+                lock (_LockObj)
                 {
                     for (int i = 0; i < threads.Length; i++)
                         threads[i].Abort();
