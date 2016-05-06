@@ -73,7 +73,7 @@ public class PPSAT_Tester
             Println("Testing minisat");
             boolean sat_minisat = TestExecutable(minisat, test_file);
             Println("Testing PPSAT");
-            boolean sat_ppsat = TestExecutable(PPSAT, test_file);
+            boolean sat_ppsat = TestExecutable(PPSAT, test_file, 1, 4);
             Println("Finished");
 
             //If don't agree, keep the file and inform the user
@@ -123,6 +123,39 @@ public class PPSAT_Tester
         BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
 
         //Search through all lines of the output to determine satisfiability
+        String s;
+        boolean satisfiable = false;
+        while((s = br.readLine()) != null)
+        {
+            if(s.contains(SATISFIABLE))
+                satisfiable = true;
+            if(s.contains(UNSATISFIABLE))
+                satisfiable = false;
+        }
+
+        br.close();
+
+        return satisfiable;
+    }
+
+    /*
+    * Function TestExecutable - Runs PPSAT on a given test with num_threads
+    *   number of threads used for Decision. Returns once it tells if it's
+    *   SAT or UNSAT
+    */
+    private static boolean TestExecutable(File file, String test_file, int num_solve_threads, int num_decision_threads) throws Exception
+    {
+        //Create the process
+        ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath(), test_file, " -t ", Integer.toString(num_solve_threads), " -dt ", Integer.toString(num_decision_threads));
+
+        //Start PPSAT
+        Process process = pb.start();
+        process.waitFor();
+
+        //Create BR to read output
+        BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+        //Read output line by line to find if it's SAT or UNSAT
         String s;
         boolean satisfiable = false;
         while((s = br.readLine()) != null)

@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="59d9215b-ca06-4d97-aaef-245a382745be" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PPSAT_Tester/KFoldTesting.class" afterPath="$PROJECT_DIR$/out/production/PPSAT_Tester/KFoldTesting.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/PPSAT_Tester/PPSAT_Tester.class" afterPath="$PROJECT_DIR$/out/production/PPSAT_Tester/PPSAT_Tester.class" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT/SAT_Solver.cs" afterPath="$PROJECT_DIR$/../PPSAT_Solver/PPSAT/SAT_Solver.cs" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/KFoldTesting.java" afterPath="$PROJECT_DIR$/src/KFoldTesting.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/PPSAT_Tester.java" afterPath="$PROJECT_DIR$/src/PPSAT_Tester.java" />
     </list>
@@ -25,7 +29,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="PPSAT_Tester.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="PPSAT_Tester.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="221">
@@ -35,11 +39,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="KFoldTesting.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="KFoldTesting.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/KFoldTesting.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="9" column="69" selection-start-line="9" selection-start-column="69" selection-end-line="9" selection-end-column="69" />
+            <state relative-caret-position="170">
+              <caret line="45" column="52" selection-start-line="45" selection-start-column="52" selection-end-line="45" selection-end-column="52" />
               <folding />
             </state>
           </provider>
@@ -150,7 +154,7 @@
       <recent name="C:\Users\Ryn Farr\Documents\GitHub\PPSAT\PPSAT_Tester" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.KFoldTesting">
+  <component name="RunManager" selected="Application.PPSAT_Tester">
     <configuration default="false" name="PPSAT_Tester" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <option name="MAIN_CLASS_NAME" value="PPSAT_Tester" />
@@ -421,8 +425,8 @@
     </list>
     <recent_temporary>
       <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.KFoldTesting" />
-        <item index="1" class="java.lang.String" itemvalue="Application.PPSAT_Tester" />
+        <item index="0" class="java.lang.String" itemvalue="Application.PPSAT_Tester" />
+        <item index="1" class="java.lang.String" itemvalue="Application.KFoldTesting" />
       </list>
     </recent_temporary>
   </component>
@@ -444,7 +448,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="1912" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -458,7 +462,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.100520834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.100520834" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -736,18 +740,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
+    <entry file="file://$PROJECT_DIR$/src/KFoldTesting.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
+        <state relative-caret-position="170">
+          <caret line="45" column="52" selection-start-line="45" selection-start-column="52" selection-end-line="45" selection-end-column="52" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/KFoldTesting.java">
+    <entry file="file://$PROJECT_DIR$/src/PPSAT_Tester.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="9" column="69" selection-start-line="9" selection-start-column="69" selection-end-line="9" selection-end-column="69" />
+        <state relative-caret-position="221">
+          <caret line="16" column="0" selection-start-line="16" selection-start-column="0" selection-end-line="16" selection-end-column="0" />
           <folding />
         </state>
       </provider>

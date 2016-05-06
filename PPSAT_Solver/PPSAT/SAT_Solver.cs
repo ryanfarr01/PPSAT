@@ -53,7 +53,7 @@ namespace PPSAT
         /// <summary>
         /// The number fo threads that can run at once per program
         /// </summary>
-        private static int _DecisionThreads = 4;
+        private static int _DecisionThreads = 0;
 
         /// <summary>
         /// The object that we lock on in order to make sure that the
@@ -73,105 +73,125 @@ namespace PPSAT
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            HashSet<Disjunction> disjunctions; //The list of disjunctive clauses in the CNF
-            Dictionary<int, HashSet<Disjunction>> var_disjunctions; //Maps variables to a hashset of all of the disjunctions they're in
-            
-            //Check to see if the filepath was passed in
-            if (args.Count() > 0)
-            {
-                //Try to read the file
-                if (!ReadFile(out disjunctions, out var_disjunctions, args[0]))
-                {
-                    Console.WriteLine("Could not read file. Exiting...");
-                    return;
-                }
-
-                //Get the thread values
-                for(int i = 1; i < args.Length; i++)
-                {
-                    String s = args[i].Replace(" ", "");
-                    switch(s)
-                    {
-                        case "-t":
-                            if (!int.TryParse(args[++i], out _SolveThreads) || _SolveThreads < 1)
-                            {
-                                Console.WriteLine("Failed to get the threads value or value was less tahn 1, using default of 1");
-                                _SolveThreads = 1;
-                            }
-                            break;
-
-                        case "-dt":
-                            if (!int.TryParse(args[++i], out _DecisionThreads) || _DecisionThreads < 0)
-                            {
-                                Console.WriteLine("Failed to get number of threads for Decision or it was less than 0. Defaulting to 0");
-                                _DecisionThreads = 0;
-                            }
-                            break;
-                    }
-                }
-            }
-            else
-            {
-                //If the filepath wasn't passed in, request it
-                Console.WriteLine("Please input file path: ");
-                String path = Console.ReadLine();
-
-                //Try to read the file
-                if (!ReadFile(out disjunctions, out var_disjunctions, path))
-                {
-                    Console.WriteLine("Could not read file. Exiting...");
-                    Console.ReadLine();
-                    return;
-                }
-            }
-
             //Create the threads list
             Thread[] threads = new Thread[_SolveThreads];
-            Random r = new Random(); //A random number generate to generate the seeds of the other random number generators
 
-            //Create all of the threads
-            for(int i = 0; i < _SolveThreads; i++)
+            try
             {
-                //Set up a frame so that we don't share references
-                Frame f = new Frame(disjunctions, new List<Variable>(), new Variable(-1, false));
-                Random rt = new Random(r.Next());
+                HashSet<Disjunction> disjunctions; //The list of disjunctive clauses in the CNF
+                Dictionary<int, HashSet<Disjunction>> var_disjunctions; //Maps variables to a hashset of all of the disjunctions they're in
 
-                //Grab all of the data
-                HashSet<Disjunction> d = f.disjunctions;
-                Dictionary<int, HashSet<Disjunction>> vd = f.var_disjunctions;
-                List<Variable> Mt = new List<Variable>();
+                //Check to see if the filepath was passed in
+                if (args.Count() > 0)
+                {
+                    //Try to read the file
+                    if (!ReadFile(out disjunctions, out var_disjunctions, args[0]))
+                    {
+                        Console.WriteLine("Could not read file. Exiting...");
+                        return;
+                    }
 
-                //Start the thread
-                threads[i] = new Thread(() => DetermineSAT(ref d, ref vd, out Mt, rt, 0.1f));
-                threads[i].Start();
+                    //Get the thread values
+                    for (int i = 1; i < args.Length; i++)
+                    {
+                        String s = args[i].Replace(" ", "");
+                        switch (s)
+                        {
+                            case "-t":
+                                if (!int.TryParse(args[++i], out _SolveThreads) || _SolveThreads < 1)
+                                {
+                                    Console.WriteLine("Failed to get the threads value or value was less tahn 1, using default of 1");
+                                    _SolveThreads = 1;
+                                }
+                                break;
+
+                            case "-dt":
+                                if (!int.TryParse(args[++i], out _DecisionThreads) || _DecisionThreads < 0)
+                                {
+                                    Console.WriteLine("Failed to get number of threads for Decision or it was less than 0. Defaulting to 0");
+                                    _DecisionThreads = 0;
+                                }
+                                break;
+                        }
+                    }
+                }
+                else
+                {
+                    //If the filepath wasn't passed in, request it
+                    Console.WriteLine("Please input file path: ");
+                    String path = Console.ReadLine();
+
+                    //Try to read the file
+                    if (!ReadFile(out disjunctions, out var_disjunctions, path))
+                    {
+                        Console.WriteLine("Could not read file. Exiting...");
+                        Console.ReadLine();
+                        return;
+                    }
+                }
+
+                Random r = new Random(); //A random number generate to generate the seeds of the other random number generators
+
+                //Create all of the threads
+                for (int i = 0; i < _SolveThreads; i++)
+                {
+                    //Set up a frame so that we don't share references
+                    Frame f = new Frame(disjunctions, new List<Variable>(), new Variable(-1, false));
+                    Random rt = new Random(r.Next());
+
+                    //Grab all of the data
+                    HashSet<Disjunction> d = f.disjunctions;
+                    Dictionary<int, HashSet<Disjunction>> vd = f.var_disjunctions;
+                    List<Variable> Mt = new List<Variable>();
+
+                    //Start the thread
+                    threads[i] = new Thread(() => DetermineSAT(ref d, ref vd, out Mt, rt, 0.1f));
+                    threads[i].Start();
+                }
+
+                //While we aren't done
+                while (ready == state.UNSOLVED)
+                {
+                    Thread.Sleep(1); //suspend for x milliseconds while we wait for one of the threads to solve it 
+                }
+
+                //Check if it was satisfiable
+                if (ready == state.SAT)
+                {
+                    Console.WriteLine("SATISFIABLE");
+
+                    foreach (Variable v in finalModel)
+                        Console.WriteLine(v.ID + " : " + v.value);
+                }
+                else //Otherwise it was unsatisfiable
+                {
+                    Console.WriteLine("UNSATISFIABLE");
+                }
+
+                Console.WriteLine("Number of threads: " + threads.Length);
+
+                //Close all threads
+                lock(_LockObj)
+                {
+                    for (int i = 0; i < threads.Length; i++)
+                        threads[i].Abort();
+                    for (int i = 0; i < _ExtraThreads.Count; i++)
+                        _ExtraThreads[i].Abort();
+                }
             }
-
-            //While we aren't done
-            while (ready == state.UNSOLVED)
+            catch (Exception)
             {
-                Thread.Sleep(1); //suspend for x milliseconds while we wait for one of the threads to solve it 
-            }
+                //Close all threads
+                lock(_LockObj)
+                {
+                    for (int i = 0; i < threads.Length; i++)
+                        threads[i].Abort();
+                    for (int i = 0; i < _ExtraThreads.Count; i++)
+                        _ExtraThreads[i].Abort();
+                }
 
-            //Check if it was satisfiable
-            if(ready == state.SAT)
-            {
-                Console.WriteLine("SATISFIABLE");
-
-                foreach (Variable v in finalModel)
-                    Console.WriteLine(v.ID + " : " + v.value);
-            }
-            else //Otherwise it was unsatisfiable
-            {
-                Console.WriteLine("UNSATISFIABLE");
-            }
-
-            Console.WriteLine("Number of threads: " + threads.Length);
-
-            //Close all threads
-            foreach (Thread t in threads)
-                t.Abort();
-            foreach (Thread t in _ExtraThreads)
-                t.Abort();
+                return;
+            }//Don't print the error if one exists
         }
 
         /// <summary>

@@ -43,7 +43,7 @@ public class KFoldTesting
             {
                 String test_file = "Tests/test-" + i + ".cnf";
 
-                TestExecutable(PPSAT, test_file, threads);
+                TestExecutable(PPSAT, test_file, 1, threads);
                 System.gc();
             }
             long end_time = System.nanoTime();
@@ -61,10 +61,10 @@ public class KFoldTesting
     *   number of threads used for Decision. Returns once it tells if it's
     *   SAT or UNSAT
     */
-    private static boolean TestExecutable(File file, String test_file, int num_threads) throws Exception
+    private static boolean TestExecutable(File file, String test_file, int num_solve_threads, int num_decision_threads) throws Exception
     {
         //Create the process
-        ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath(), test_file, " -dt ", Integer.toString(num_threads));
+        ProcessBuilder pb = new ProcessBuilder(file.getAbsolutePath(), test_file, " -t ", Integer.toString(num_solve_threads), " -dt ", Integer.toString(num_decision_threads));
 
         //Start PPSAT
         Process process = pb.start();
